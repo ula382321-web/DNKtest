@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генетика здоровья — загрузите анализы, получите рекомендации</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fc;
+            color: #1a2a3f;
+        }
+
+        /* навигация */
+        .nav {
+            display: flex;
+            justify-content: flex-end;
+            gap: 32px;
+            padding: 20px 40px;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-link {
+            background: none;
+            border: none;
+            color: #2c3e66;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            padding: 6px 0;
+        }
+        .nav-link:hover { color: #6c5ce7; }
+
+        /* герой */
+        .hero {
+            text-align: center;
+            padding: 64px 24px 56px;
+            background: linear-gradient(120deg, #f0f4ff 0%, #faf5ff 100%);
+        }
+        .title {
+            font-size: 44px;
+            font-weight: 700;
+            color: #1e2f4e;
+            max-width: 800px;
+            margin: 0 auto 16px;
+        }
+        .subtitle {
+            font-size: 18px;
+            color: #4a5b7a;
+            max-width: 580px;
+            margin: 0 auto;
+        }
+
+        /* услуги в ряд */
+        .services-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 28px;
+            padding: 48px 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .service-card {
+            flex: 1;
+            min-width: 210px;
+            background: white;
+            border-radius: 28px;
+            padding: 28px 20px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+            border: 1px solid #eef2f8;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.08);
+        }
+        .service-icon {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 16px;
+            background: #eef3ff;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .service-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1e2f4e;
+        }
+        .service-card p {
+            font-size: 14px;
+            color: #5a6e8a;
+        }
+
+        /* как это работает */
+        .how-section {
+            background: white;
+            padding: 56px 24px;
+            border-top: 1px solid #edf2f7;
+            border-bottom: 1px solid #edf2f7;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 650;
+            color: #1e2f4e;
+            margin-bottom: 48px;
+        }
+        .steps {
+            display: flex;
+            justify-content: center;
+            gap: 56px;
+            flex-wrap: wrap;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .step {
+            text-align: center;
+            flex: 1;
+        }
+        .step-number {
+            font-size: 44px;
+            font-weight: 700;
+            color: #b7c9e2;
+            margin-bottom: 12px;
+        }
+        .step h3 { font-size: 20px; margin-bottom: 8px; color: #2c3e66; }
+        .step p { color: #5e6f8d; font-size: 14px; }
+
+        .footer {
+            text-align: center;
+            padding: 32px;
+            background: #eef2f8;
+            color: #5a6e8a;
+            font-size: 14px;
+        }
+
+        /* формы входа/регистрации */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 80px);
+            padding: 40px 20px;
+        }
+        .auth-card {
+            background: white;
+            border-radius: 36px;
+            padding: 44px 40px;
+            width: 100%;
+            max-width: 460px;
+            box-shadow: 0 25px 40px -12px rgba(0,0,0,0.08);
+            border: 1px solid #e9edf4;
+        }
+        .auth-title { font-size: 30px; font-weight: 700; margin-bottom: 8px; color: #1e2f4e; }
+        .auth-subtitle { color: #5e6f8d; margin-bottom: 32px; }
+        .input {
+            width: 100%;
+            padding: 14px 18px;
+            margin-bottom: 18px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 24px;
+            font-size: 15px;
+            background: #fff;
+        }
+        .input:focus { outline: none; border-color: #9aa9c1; }
+        .button {
+            width: 100%;
+            padding: 14px;
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            border-radius: 32px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 6px;
+            transition: 0.2s;
+        }
+        .button:hover { background: #5b4bc4; }
+        .forgot-password {
+            background: none;
+            border: none;
+            color: #7b8ba3;
+            cursor: pointer;
+            display: block;
+            text-align: right;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+        .auth-footer { text-align: center; margin-top: 28px; color: #5a6e8a; font-size: 14px; }
+        .link-button {
+            background: none;
+            border: none;
+            color: #6c5ce7;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .terms { font-size: 12px; text-align: center; color: #8b9abb; margin-top: 24px; }
+
+        /* личный кабинет */
+        .dashboard-wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 48px 28px;
+        }
+        .profile-card, .upload-card, .recommendations-block {
+            background: white;
+            border-radius: 32px;
+            padding: 32px 36px;
+            margin-bottom: 32px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.02);
+            border: 1px solid #edf2f8;
+        }
+        .dashboard-title { font-size: 26px; font-weight: 700; margin-bottom: 24px; color: #1e2f4e; }
+        .profile-info {
+            background: #f8fafd;
+            padding: 24px;
+            border-radius: 24px;
+        }
+        .profile-info h3 { font-size: 22px; margin-bottom: 12px; color: #1e2f4e; }
+        .profile-info p { margin: 6px 0; color: #4a5b7a; }
+        .section-subtitle { font-size: 22px; font-weight: 600; margin-bottom: 20px; color: #1e2f4e; }
+        .upload-area {
+            border: 2px dashed #cbdbe0;
+            border-radius: 28px;
+            padding: 36px 20px;
+            text-align: center;
+            background: #fafcff;
+            margin-bottom: 28px;
+        }
+        .file-label {
+            background: #6c5ce7;
+            color: white;
+            padding: 10px 28px;
+            border-radius: 40px;
+            display: inline-block;
+            cursor: pointer;
+            margin: 16px 0 12px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .file-input { display: none; }
+        .file-hint { font-size: 12px; color: #8b9abb; }
+        .files-list { margin-top: 20px; }
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #eef2fa;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .file-meta { color: #7c8ba8; font-size: 13px; }
+        .badge-genetic {
+            background: #e9eefc;
+            color: #4c3d9e;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 500;
+            margin-left: 12px;
+        }
+        .delete-file {
+            background: none;
+            border: none;
+            color: #e53e3e;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 4px 8px;
+            border-radius: 20px;
+            transition: 0.2s;
+        }
+        .delete-file:hover {
+            background: #fff5f5;
+        }
+
+        /* карточки рекомендаций */
+        .recs-header {
+            border-bottom: 1px solid #edf2fa;
+            margin-bottom: 28px;
+            padding-bottom: 16px;
+        }
+        .recs-header h3 { font-size: 24px; color: #1e2f4e; }
+        .recs-header p { color: #5a6e8a; margin-top: 6px; }
+        .recommendations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 28px;
+        }
+        .rec-card {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 24px;
+            border: 1px solid #eef2fa;
+            transition: 0.2s;
+        }
+        .rec-card:hover { box-shadow: 0 12px 22px -10px rgba(0,0,0,0.06); }
+        .rec-category {
+            font-size: 12px;
+            font-weight: 600;
+            color: #8b7bd6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+        .rec-title { font-size: 18px; font-weight: 700; margin: 8px 0 8px; color: #1e2f4e; }
+        .rec-description { font-size: 14px; color: #4a5b7a; margin-bottom: 18px; line-height: 1.45; }
+        .stores-section {
+            background: #f8fafd;
+            border-radius: 20px;
+            padding: 14px;
+        }
+        .stores-label { font-weight: 600; font-size: 13px; margin-bottom: 10px; color: #2c3e66; }
+        .store-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            padding: 5px 0;
+            color: #3b4e6e;
+        }
+        .store-distance { color: #7c8ba8; font-size: 12px; }
+
+        /* Модальное окно загрузки/анализа */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(6px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        .modal-card {
+            background: white;
+            border-radius: 48px;
+            padding: 40px 36px;
+            text-align: center;
+            max-width: 360px;
+            width: 85%;
+            box-shadow: 0 30px 40px rgba(0,0,0,0.2);
+        }
+        .modal-icon {
+            font-size: 56px;
+            margin-bottom: 20px;
+            animation: pulse 1.2s infinite;
+        }
+        .modal-title {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #1e2f4e;
+        }
+        .modal-message {
+            color: #5a6e8a;
+            margin-bottom: 24px;
+            font-size: 15px;
+        }
+        .progress-bar-bg {
+            width: 100%;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #6c5ce7;
+            width: 0%;
+            transition: width 0.2s;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .info-decode {
+            background: #f0f3fa;
+            border-radius: 24px;
+            padding: 16px;
+            text-align: center;
+            margin-top: 20px;
+            color: #4c5b7c;
+        }
+
+        @media (max-width: 800px) {
+            .services-row { flex-direction: column; align-items: stretch; }
+            .nav { justify-content: center; gap: 20px; }
+            .title { font-size: 32px; }
+        }
+    </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script>
+    // ------------------ СОСТОЯНИЯ ------------------
+    let currentScreen = 'landing';   // landing, login, register, dashboard, recommendations
+    let isLoggedIn = false;
+    let user = {
+        name: 'Виктория',
+        email: 'zyryanova@gmail.com',
+        city: 'Екатеринбург',
+        birthday: '2000-09-06'
+    };
+    
+    let uploadedFiles = [];          // массив файлов
+    let showRecommendations = false; // показывать ли блок рекомендаций
+    let showModal = false;           // показывать модальное окно
+    let modalProgress = 0;
+    let modalMessage = 'Анализ файла...';
+    let modalTimer = null;
+
+    // ---------- БАЗА РЕКОМЕНДАЦИЙ (как в дизайне) ----------
+    const recommendationsList = [
+        // Питание
+        { id: 'f1', category: 'Питание и продукты', title: 'Жирная рыба (лосось, скумбрия, сардины)', desc: 'Естественный источник витамина D3 для восполнения дефицита', stores: [{ name: 'ВкусВилл', dist: '0.8 км' },{ name: 'Перекресток', dist: '1.2 км' },{ name: 'Азбука Вкуса', dist: '2.1 км' },{ name: 'Пятёрочка', dist: '1.5 км' }] },
+        { id: 'f2', category: 'Питание и продукты', title: 'Яйца (желток)', desc: 'Содержат витамин D, B12 и холин для поддержки нервной системы', stores: [{ name: 'ВкусВилл', dist: '0.8 км' },{ name: 'Перекресток', dist: '1.2 км' },{ name: 'Азбука Вкуса', dist: '2.1 км' },{ name: 'Пятёрочка', dist: '1.5 км' }] },
+        { id: 'f3', category: 'Питание и продукты', title: 'Шпинат и листовая зелень', desc: 'Источник фолатов и магния для поддержки метилирования', stores: [{ name: 'ВкусВилл', dist: '0.8 км' },{ name: 'Перекресток', dist: '1.2 км' },{ name: 'Азбука Вкуса', dist: '2.1 км' },{ name: 'Пятёрочка', dist: '1.5 км' }] },
+        { id: 'f4', category: 'Питание и продукты', title: 'Орехи (миндаль, кешью)', desc: 'Магний, витамин Е и полезные жиры для сердечно-сосудистой системы', stores: [{ name: 'ВкусВилл', dist: '0.8 км' },{ name: 'Перекресток', dist: '1.2 км' },{ name: 'Азбука Вкуса', dist: '2.1 км' },{ name: 'Пятёрочка', dist: '1.5 км' }] },
+        // БАДы
+        { id: 's1', category: 'Биологически активные добавки', title: 'Витамин D3 2000-4000 МЕ', desc: 'Критический дефицит обнаружен в анализах. Требуется восполнение для иммунитета и костей', stores: [{ name: 'Аптека 36.6', dist: '0.5 км' },{ name: 'Ригла', dist: '1.8 км' },{ name: 'Планета Здоровья', dist: '2.3 км' },{ name: 'Здравсити', dist: '3.1 км' }] },
+        { id: 's2', category: 'Биологически активные добавки', title: 'Магний цитрат или бисглицинат 400 мг', desc: 'Пониженный уровень в анализах. Необходим для нервной системы и сна', stores: [{ name: 'Аптека 36.6', dist: '0.5 км' },{ name: 'Ригла', dist: '1.8 км' },{ name: 'Планета Здоровья', dist: '2.3 км' },{ name: 'Здравсити', dist: '3.1 км' }] },
+        { id: 's3', category: 'Биологически активные добавки', title: 'Омега-3 (EPA+DHA) 1000-2000 мг', desc: 'Поддержка сердечно-сосудистой системы и снижение воспаления', stores: [{ name: 'Аптека 36.6', dist: '0.5 км' },{ name: 'Ригла', dist: '1.8 км' },{ name: 'Планета Здоровья', dist: '2.3 км' },{ name: 'Здравсити', dist: '3.1 км' }] },
+        { id: 's4', category: 'Биологически активные добавки', title: 'Коэнзим Q10 100-200 мг', desc: 'Антиоксидантная защита и поддержка энергетического метаболизма', stores: [{ name: 'Аптека 36.6', dist: '0.5 км' },{ name: 'Ригла', dist: '1.8 км' },{ name: 'Планета Здоровья', dist: '2.3 км' },{ name: 'Здравсити', dist: '3.1 км' }] },
+        // Косметика
+        { id: 'c1', category: 'Косметика и уход за кожей', title: 'Солнцезащитный крем SPF 50+', desc: 'Ежедневная защита от УФ-излучения, особенно важна при дефиците витамина D', stores: [{ name: 'Летуаль', dist: '1.4 км' },{ name: 'Подружка', dist: '2.7 км' },{ name: 'Золотое Яблоко', dist: '1.9 км' },{ name: 'Рив Гош', dist: '2.2 км' }] },
+        { id: 'c2', category: 'Косметика и уход за кожей', title: 'Сыворотка с ниацинамидом (витамин В3)', desc: 'Укрепление кожного барьера и выравнивание тона кожи', stores: [{ name: 'Летуаль', dist: '1.4 км' },{ name: 'Подружка', dist: '2.7 км' },{ name: 'Золотое Яблоко', dist: '1.9 км' },{ name: 'Рив Гош', dist: '2.2 км' }] },
+        { id: 'c3', category: 'Косметика и уход за кожей', title: 'Увлажняющий крем с керамидами', desc: 'Восстановление липидного барьера и защита от обезвоживания', stores: [{ name: 'Летуаль', dist: '1.4 км' },{ name: 'Подружка', dist: '2.7 км' },{ name: 'Золотое Яблоко', dist: '1.9 км' },{ name: 'Рив Гош', dist: '2.2 км' }] },
+        // Спорт
+        { id: 'p1', category: 'Спортивное питание', title: 'Сывороточный протеин', desc: 'Поддержка мышечной массы и восстановление после тренировок', stores: [{ name: 'Спортмастер', dist: '1.6 км' },{ name: 'Декатлон', dist: '8.3 км' },{ name: 'Кант', dist: '2.4 км' },{ name: 'Fitness Formula', dist: '3.8 км' }] },
+        { id: 'p2', category: 'Спортивное питание', title: 'ВСАА комплекс', desc: 'Защита мышц от разрушения и улучшение восстановления', stores: [{ name: 'Спортмастер', dist: '1.6 км' },{ name: 'Декатлон', dist: '8.3 км' },{ name: 'Кант', dist: '2.4 км' },{ name: 'Fitness Formula', dist: '3.8 км' }] },
+        { id: 'p3', category: 'Спортивное питание', title: 'Креатин моногидрат', desc: 'Увеличение силовых показателей и выносливости', stores: [{ name: 'Спортмастер', dist: '1.6 км' },{ name: 'Декатлон', dist: '8.3 км' },{ name: 'Кант', dist: '2.4 км' },{ name: 'Fitness Formula', dist: '3.8 км' }] }
+    ];
+
+    // SVG-иконки для услуг
+    const iconTraining = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#6c5ce7" stroke-width="1.5"><path d="M12 4v1M12 8v1M12 12v1M12 16v1M12 20v1"/><path d="M4 12h1M8 12h1M12 12h1M16 12h1M20 12h1"/><circle cx="12" cy="12" r="2"/></svg>`;
+    const iconNutrition = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#6c5ce7" stroke-width="1.5"><path d="M12 2L15 6H9L12 2Z"/><path d="M12 22v-8M8 14h8"/><rect x="4" y="14" width="16" height="8" rx="1"/></svg>`;
+    const iconSkincare = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#6c5ce7" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><path d="M12 4v1M12 19v1M4 12h1M19 12h1"/><path d="M7.5 9.5L9 11M16.5 14.5L15 13"/></svg>`;
+    const iconNutrients = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#6c5ce7" stroke-width="1.5"><path d="M12 6v12M6 12h12"/><circle cx="12" cy="12" r="9"/></svg>`;
+
+    // Рендер карточек рекомендаций
+    function renderRecCards() {
+        return recommendationsList.map(rec => `
+            <div class="rec-card">
+                <div class="rec-category">📌 ${rec.category}</div>
+                <div class="rec-title">${rec.title}</div>
+                <div class="rec-description">${rec.desc}</div>
+                <div class="stores-section">
+                    <div class="stores-label">Где купить:</div>
+                    ${rec.stores.map(s => `<div class="store-item"><span>${s.name}</span><span class="store-distance">${s.dist}</span></div>`).join('')}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Обновление флага showRecommendations на основе наличия генетических файлов
+    function updateRecommendationsFlag() {
+        showRecommendations = uploadedFiles.some(f => f.isGenetic === true);
+        rerender();
+    }
+
+    // Закрыть модальное окно и обновить флаг
+    function closeModalAndShowRecs() {
+        if (modalTimer) clearTimeout(modalTimer);
+        showModal = false;
+        updateRecommendationsFlag();
+    }
+
+    // Показать модальное окно с прогрессом на 2 секунды
+    function showAnalysisModal() {
+        if (modalTimer) clearTimeout(modalTimer);
+        showModal = true;
+        modalProgress = 0;
+        modalMessage = 'Чтение файла...';
+        rerender();
+
+        // Анимация прогресса
+        let progress = 0;
+        const interval = setInterval(() => {
+            if (progress < 100) {
+                progress += 20;
+                modalProgress = progress;
+                if (progress === 40) modalMessage = 'Извлечение данных...';
+                if (progress === 70) modalMessage = 'Формирование рекомендаций...';
+                if (progress === 100) modalMessage = 'Готово!';
+                rerender();
+            } else {
+                clearInterval(interval);
+                // Закрываем модалку через 300 мс
+                modalTimer = setTimeout(() => {
+                    closeModalAndShowRecs();
+                }, 300);
+            }
+        }, 350);
+    }
+
+    // Удаление файла
+    function deleteFile(index) {
+        uploadedFiles.splice(index, 1);
+        // Если удалили все генетические файлы, рекомендации пропадут
+        updateRecommendationsFlag();
+    }
+
+    // Обработчик загрузки файлов
+    function handleFileUpload(e) {
+        const files = e.target.files;
+        if (!files || files.length === 0) return;
+        
+        let addedGenetic = false;
+        for (let f of files) {
+            const isGenetic = f.name.toLowerCase().includes('днк') || f.name.toLowerCase().includes('dna') ||
+                              f.name.toLowerCase().includes('анализ') || f.name.toLowerCase().includes('крови') ||
+                              f.name.toLowerCase().includes('биохимия') || f.name.toLowerCase().includes('тест');
+            uploadedFiles.push({
+                name: f.name,
+                size: (f.size / (1024*1024)).toFixed(1) + ' МБ',
+                date: new Date().toLocaleDateString('ru-RU'),
+                isGenetic: isGenetic
+            });
+            if (isGenetic) addedGenetic = true;
+        }
+        
+        // Если загружен хотя бы один генетический файл — показываем модальное окно
+        if (addedGenetic) {
+            showAnalysisModal();
+        } else {
+            // Если файлы не распознаны как анализы, просто обновляем список без модалки
+            updateRecommendationsFlag();
+        }
+        // Очищаем input, чтобы можно было загрузить те же файлы повторно
+        e.target.value = '';
+    }
+
+    // Авторизация / регистрация (простая имитация)
+    function doLogin(email, pwd) { if(email && pwd) { isLoggedIn = true; currentScreen = 'dashboard'; rerender(); } else alert('Введите email и пароль'); }
+    function doRegister(name, email, pwd, city, birth) { if(name && email && pwd && city && birth) { user = { name, email, city, birthday: birth }; isLoggedIn = true; currentScreen = 'dashboard'; rerender(); } else alert('Заполните все поля'); }
+    function logout() { isLoggedIn = false; currentScreen = 'landing'; rerender(); }
+
+    // ------ ОТРИСОВКА ЭКРАНОВ ------
+    function renderNav() {
+        return `
+            <nav class="nav">
+                <button class="nav-link" onclick="window.app.goTo('landing')">На главную</button>
+                ${!isLoggedIn ? 
+                    `<button class="nav-link" onclick="window.app.goTo('login')">Вход</button>
+                     <button class="nav-link" onclick="window.app.goTo('register')">Регистрация</button>` :
+                    `<button class="nav-link" onclick="window.app.goTo('dashboard')">Личный кабинет</button>
+                     <button class="nav-link" onclick="window.app.goTo('recommendations')">Рекомендации</button>
+                     <button class="nav-link" onclick="window.app.logout()">Выйти</button>`
+                }
+            </nav>
+        `;
+    }
+
+    function renderLanding() {
+        return `
+            ${renderNav()}
+            <div class="hero">
+                <h1 class="title">Персонализированная генетика для вашего здоровья</h1>
+                <p class="subtitle">Откройте свой генетический потенциал. Персональные рекомендации по тренировкам, питанию, уходу за кожей и витаминам.</p>
+            </div>
+            <div class="services-row">
+                <div class="service-card"><div class="service-icon">${iconTraining}</div><h3>Тренировки</h3><p>Персонализированная программа на основе генетического профиля</p></div>
+                <div class="service-card"><div class="service-icon">${iconNutrition}</div><h3>Питание</h3><p>Индивидуальный план питания с учётом метаболизма</p></div>
+                <div class="service-card"><div class="service-icon">${iconSkincare}</div><h3>Уход за кожей</h3><p>Рекомендации по уходу на основе ДНК</p></div>
+                <div class="service-card"><div class="service-icon">${iconNutrients}</div><h3>Нутриенты</h3><p>Подбор витаминов и добавок</p></div>
+            </div>
+            <div class="how-section">
+                <h2 class="section-title">Как это работает</h2>
+                <div class="steps">
+                    <div class="step"><div class="step-number">01</div><h3>Загрузите результаты</h3><p>Загрузите результаты ваших ДНК-тестов и анализов</p></div>
+                    <div class="step"><div class="step-number">02</div><h3>Получите рекомендации</h3><p>Получите персонализированные рекомендации по здоровью</p></div>
+                </div>
+            </div>
+            <footer class="footer">© 2026 Персонализированная генетика для вашего здоровья.</footer>
+        `;
+    }
+
+    function renderLogin() {
+        return `
+            ${renderNav()}
+            <div class="auth-container">
+                <div class="auth-card">
+                    <h2 class="auth-title">Вход в систему</h2>
+                    <p class="auth-subtitle">Войдите в личный кабинет</p>
+                    <input type="email" id="loginEmail" class="input" placeholder="Email">
+                    <input type="password" id="loginPwd" class="input" placeholder="Пароль">
+                    <button class="forgot-password">Забыли пароль?</button>
+                    <button class="button" onclick="window.app.loginAction()">Войти →</button>
+                    <p class="auth-footer">Нет аккаунта? <button class="link-button" onclick="window.app.goTo('register')">Зарегистрироваться</button></p>
+                    <p class="terms">Входя в систему, вы соглашаетесь с условиями использования</p>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderRegister() {
+        return `
+            ${renderNav()}
+            <div class="auth-container">
+                <div class="auth-card">
+                    <h2 class="auth-title">Регистрация</h2>
+                    <p class="auth-subtitle">Создайте новый аккаунт</p>
+                    <input type="text" id="regName" class="input" placeholder="Имя">
+                    <input type="email" id="regEmail" class="input" placeholder="Email">
+                    <input type="password" id="regPwd" class="input" placeholder="Пароль">
+                    <input type="text" id="regCity" class="input" placeholder="Город">
+                    <input type="date" id="regBirth" class="input" placeholder="Дата рождения">
+                    <button class="button" onclick="window.app.registerAction()">Зарегистрироваться →</button>
+                    <p class="auth-footer">Уже есть аккаунт? <button class="link-button" onclick="window.app.goTo('login')">Войти</button></p>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderDashboard() {
+        return `
+            ${renderNav()}
+            ${showModal ? `
+            <div class="modal-overlay">
+                <div class="modal-card">
+                    <div class="modal-icon">🧬</div>
+                    <div class="modal-title">Анализ файла</div>
+                    <div class="modal-message">${modalMessage}</div>
+                    <div class="progress-bar-bg"><div class="progress-fill" style="width: ${modalProgress}%;"></div></div>
+                    <div style="font-size:14px; margin-top:8px;">${modalProgress}%</div>
+                </div>
+            </div>
+            ` : ''}
+            <div class="dashboard-wrap">
+                <div class="profile-card">
+                    <h2 class="dashboard-title">Личный кабинет</h2>
+                    <div class="profile-info">
+                        <h3>${user.name}</h3>
+                        <p>Email: ${user.email}</p>
+                        <p>Город: ${user.city}</p>
+                        <p>Дата рождения: ${new Date(user.birthday).toLocaleDateString('ru-RU')}</p>
+                    </div>
+                </div>
+                <div class="upload-card">
+                    <h3 class="section-subtitle">Результаты ДНК-теста и анализы</h3>
+                    <div class="upload-area">
+                        <p>📎 Перетащите файлы или нажмите для выбора</p>
+                        <label class="file-label">Выбрать файлы
+                            <input type="file" multiple accept=".pdf,.jpg,.png,.doc,.docx" class="file-input" onchange="window.app.uploadEvent(event)">
+                        </label>
+                        <p class="file-hint">Поддерживаемые форматы: PDF, JPG, PNG, DOC, DOCX</p>
+                    </div>
+                    <div class="files-list">
+                        <h4>Загруженные файлы (${uploadedFiles.length})</h4>
+                        ${uploadedFiles.length === 0 ? '<div style="color:#8b9abb; padding:12px 0;">Нет загруженных файлов. Загрузите результаты ДНК-теста или анализов, чтобы получить персональные рекомендации.</div>' : ''}
+                        ${uploadedFiles.map((f, idx) => `
+                            <div class="file-item">
+                                <span>📄 ${f.name} ${f.isGenetic ? '<span class="badge-genetic">🔬 Результаты анализов</span>' : ''}</span>
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <span class="file-meta">${f.size} • ${f.date}</span>
+                                    <button class="delete-file" onclick="window.app.deleteFile(${idx})">🗑 Удалить</button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                ${showRecommendations && !showModal ? `
+                <div class="recommendations-block">
+                    <div class="recs-header">
+                        <h3>✨ Персональные рекомендации</h3>
+                        <p>На основе ваших анализов и ДНК-теста мы подобрали для вас:</p>
+                    </div>
+                    <div class="recommendations-grid">
+                        ${renderRecCards()}
+                    </div>
+                </div>
+                ` : ''}
+                ${!showRecommendations && uploadedFiles.length > 0 && !showModal ? '<div class="info-decode" style="background:#f0f3fa; border-radius:24px; padding:16px; margin-top:20px; text-align:center;">📋 Среди загруженных файлов не обнаружено результатов анализов или ДНК-теста. Загрузите файл с названием, содержащим "ДНК", "анализ", "крови" и т.д.</div>' : ''}
+            </div>
+        `;
+    }
+
+    function renderFullRecommendations() {
+        return `
+            ${renderNav()}
+            <div style="max-width:1300px; margin:0 auto; padding:48px 24px;">
+                <h2 style="font-size:28px; font-weight:700; color:#1e2f4e; text-align:center;">Персонализированные рекомендации</h2>
+                <p style="text-align:center; color:#5a6e8a; margin-bottom:42px;">На основе ваших анализов и ДНК-теста</p>
+                <div class="recommendations-grid">
+                    ${renderRecCards()}
+                </div>
+            </div>
+        `;
+    }
+
+    function rerender() {
+        const root = document.getElementById('root');
+        if (!root) return;
+        let html = '';
+        if (currentScreen === 'landing') html = renderLanding();
+        else if (currentScreen === 'login') html = renderLogin();
+        else if (currentScreen === 'register') html = renderRegister();
+        else if (currentScreen === 'dashboard') html = renderDashboard();
+        else if (currentScreen === 'recommendations') html = renderFullRecommendations();
+        root.innerHTML = html;
+    }
+
+    window.app = {
+        goTo: (s) => { currentScreen = s; rerender(); },
+        loginAction: () => { const email = document.getElementById('loginEmail')?.value; const pwd = document.getElementById('loginPwd')?.value; doLogin(email, pwd); },
+        registerAction: () => { const n = document.getElementById('regName')?.value; const e = document.getElementById('regEmail')?.value; const p = document.getElementById('regPwd')?.value; const c = document.getElementById('regCity')?.value; const b = document.getElementById('regBirth')?.value; doRegister(n, e, p, c, b); },
+        uploadEvent: (e) => handleFileUpload(e),
+        deleteFile: (idx) => deleteFile(idx),
+        logout: () => logout()
+    };
+    rerender();
+</script>
+</body>
+</html>
